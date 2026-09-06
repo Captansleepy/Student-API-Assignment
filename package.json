@@ -1,7 +1,7 @@
 {
   "name": "student-api-express",
   "version": "1.0.0",
-  "description": "CSC220 Student API in Express guided lab assignment",
+  "description": "CSC220 Student API in Express - middleware and rendered page assignment",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^5.2.1"
   },
   "devDependencies": {
