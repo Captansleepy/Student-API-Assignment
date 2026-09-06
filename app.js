@@ -4,6 +4,16 @@ const students = require("./students.json");
 const app = express();
 const PORT = 3000;
 
+app.set("view engine", "ejs");
+
+app.use((req, res, next) => {
+  const time = new Date().toLocaleTimeString();
+  console.log(`${req.method} ${req.url} ${time}`);
+  next();
+});
+
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send(`
     <h1>Student API in Express</h1>
@@ -12,7 +22,8 @@ app.get("/", (req, res) => {
     <ul>
       <li>GET /api/students</li>
       <li>GET /api/students/1</li>
-      <li>GET /api/students?major=IT</li>
+      <li>GET /students</li>
+      <li>POST /api/students</li>
     </ul>
   `);
 });
@@ -28,6 +39,12 @@ app.get("/api/students", (req, res) => {
   res.json(students);
 });
 
+app.post("/api/students", (req, res) => {
+  const newStudent = req.body;
+  students.push(newStudent);
+  res.status(201).json(newStudent);
+});
+
 app.get("/api/students/:id", (req, res) => {
   const id = req.params.id;
   const student = students.find((s) => s.id === Number(id));
@@ -39,6 +56,19 @@ app.get("/api/students/:id", (req, res) => {
   }
 
   res.json(student);
+});
+
+app.get("/students", (req, res) => {
+  res.render("students", {
+    title: "All Students",
+    students: students
+  });
+});
+
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Route not found"
+  });
 });
 
 app.listen(PORT, () => {
