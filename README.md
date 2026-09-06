@@ -1,6 +1,8 @@
 # Student API in Express
 
-CSC220 Web Development II - Guided Lab: Student API in Express.
+CSC220 Web Development II - Continued Guided Lab: Middleware & a Rendered Page.
+
+This project continues the previous Student API in Express assignment by adding middleware, JSON body parsing, a POST route, a 404 handler, and EJS rendering.
 
 ## Install
 
@@ -8,63 +10,54 @@ CSC220 Web Development II - Guided Lab: Student API in Express.
 npm install
 ```
 
-This installs Express and nodemon and refreshes `package-lock.json` with the complete dependency tree.
-
 ## Run
-
-Development mode:
 
 ```powershell
 npm run dev
 ```
 
-Or normal mode:
+## Required tests
 
-```powershell
-npm start
-```
+- `http://localhost:3000`
+- `http://localhost:3000/api/students`
+- `http://localhost:3000/api/students/2`
+- `http://localhost:3000/students`
+- `http://localhost:3000/wrong-url`
 
-## Required browser tests
+The terminal should also show logger output with the HTTP method, requested URL, and time.
 
-1. `http://localhost:3000`
-2. `http://localhost:3000/api/students`
-3. `http://localhost:3000/api/students/2`
-4. `http://localhost:3000/api/students/99`
-5. `http://localhost:3000/api/students?major=IT`
+## POST test
 
-## Expected results
-
-- Home page: welcome page and available routes.
-- All students: all 5 students as JSON.
-- Student ID 2: Boon, major CS.
-- Student ID 99: HTTP 404 with `{ "error": "Student not found" }`.
-- Major IT filter: Alice and Cherry only.
-
-## Push to the assignment repository
-
-From the folder that contains `student-api-express`:
-
-```powershell
-git clone https://github.com/Captansleepy/Student-API-Assignment.git
-cd Student-API-Assignment
-```
-
-Copy the `student-api-express` folder into the cloned repository, then run:
-
-```powershell
-git add student-api-express
-git status
-git commit -m "Complete Student API in Express assignment"
-git push origin main
-```
-
-Before committing, confirm `node_modules/` is not listed by `git status`.
-
-## Git ignore
-
-The project `.gitignore` excludes:
+Send a POST request to:
 
 ```text
-node_modules/
-.env
+http://localhost:3000/api/students
 ```
+
+with JSON such as:
+
+```json
+{
+  "id": 6,
+  "name": "May",
+  "major": "IT"
+}
+```
+
+Expected status: `201 Created`.
+
+## Project structure
+
+```text
+Student-API-Assignment/
+├── views/
+│   └── students.ejs
+├── .gitignore
+├── app.js
+├── package.json
+├── package-lock.json
+├── README.md
+└── students.json
+```
+
+`node_modules/` and `.env` are excluded by `.gitignore`.
